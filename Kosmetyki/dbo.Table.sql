@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Opinie]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Imie] NVARCHAR(50) NULL, 
+    [Email] NVARCHAR(MAX) NULL, 
+    [Opinia] NVARCHAR(MAX) NULL
+)

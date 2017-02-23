@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KosmetykiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="InformacjeOKlientach">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GUID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PostalCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Koszyk">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProduktID" Type="int" Nullable="false" />
+          <Property Name="Ilosc" Type="int" Nullable="false" />
+          <Property Name="DataZakupu" Type="datetime" />
+          <Property Name="JestwKoszyku" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Opinie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Opinia" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Produkty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="Nazwa" Type="varchar" MaxLength="100" />
+          <Property Name="Cena" Type="float" />
+          <Property Name="Opis" Type="text" />
+          <Property Name="Zdjecie" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TypyProduktow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wysylka">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProdukt" Type="int" />
+          <Property Name="Wiadomosc" Type="text" />
+          <Property Name="JakPlaci" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="JakWyslac" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Koszyk_Produkty">
+          <End Role="Produkty" Type="Self.Produkty" Multiplicity="1" />
+          <End Role="Koszyk" Type="Self.Koszyk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Koszyk">
+              <PropertyRef Name="ProduktID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produkty_TypyProduktow">
+          <End Role="TypyProduktow" Type="Self.TypyProduktow" Multiplicity="1" />
+          <End Role="Produkty" Type="Self.Produkty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypyProduktow">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produkty">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wysylka_Produkty">
+          <End Role="Produkty" Type="Self.Produkty" Multiplicity="0..1" />
+          <End Role="Wysylka" Type="Self.Wysylka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wysylka">
+              <PropertyRef Name="IdProdukt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KosmetykiDBModelStoreContainer">
+          <EntitySet Name="InformacjeOKlientach" EntityType="Self.InformacjeOKlientach" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Koszyk" EntityType="Self.Koszyk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opinie" EntityType="Self.Opinie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produkty" EntityType="Self.Produkty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypyProduktow" EntityType="Self.TypyProduktow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wysylka" EntityType="Self.Wysylka" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Koszyk_Produkty" Association="Self.FK_Koszyk_Produkty">
+            <End Role="Produkty" EntitySet="Produkty" />
+            <End Role="Koszyk" EntitySet="Koszyk" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produkty_TypyProduktow" Association="Self.FK_Produkty_TypyProduktow">
+            <End Role="TypyProduktow" EntitySet="TypyProduktow" />
+            <End Role="Produkty" EntitySet="Produkty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wysylka_Produkty" Association="Self.FK_Wysylka_Produkty">
+            <End Role="Produkty" EntitySet="Produkty" />
+            <End Role="Wysylka" EntitySet="Wysylka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KosmetykiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Koszyk">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProduktID" Type="Int32" Nullable="false" />
+          <Property Name="Ilosc" Type="Int32" Nullable="false" />
+          <Property Name="DataZakupu" Type="DateTime" Precision="3" />
+          <Property Name="JestwKoszyku" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Produkty" Relationship="Self.FK_Koszyk_Produkty" FromRole="Koszyk" ToRole="Produkty" />
+        </EntityType>
+        <EntityType Name="Produkty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Nazwa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cena" Type="Double" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Zdjecie" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Koszyks" Relationship="Self.FK_Koszyk_Produkty" FromRole="Produkty" ToRole="Koszyk" />
+          <NavigationProperty Name="TypyProduktow" Relationship="Self.FK_Produkty_TypyProduktow" FromRole="Produkty" ToRole="TypyProduktow" />
+          <NavigationProperty Name="Wysylkas" Relationship="KosmetykiDBModel.FK_Wysylka_Produkty" FromRole="Produkty" ToRole="Wysylka" />
+        </EntityType>
+        <EntityType Name="TypyProduktow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="Produkties" Relationship="Self.FK_Produkty_TypyProduktow" FromRole="TypyProduktow" ToRole="Produkty" />
+        </EntityType>
+        <Association Name="FK_Koszyk_Produkty">
+          <End Role="Produkty" Type="Self.Produkty" Multiplicity="1" />
+          <End Role="Koszyk" Type="Self.Koszyk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Koszyk">
+              <PropertyRef Name="ProduktID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produkty_TypyProduktow">
+          <End Type="Self.TypyProduktow" Multiplicity="1" Role="TypyProduktow" />
+          <End Type="Self.Produkty" Multiplicity="*" Role="Produkty" />
+          <ReferentialConstraint>
+            <Principal Role="TypyProduktow">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produkty">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KosmetykiDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Koszyks" EntityType="Self.Koszyk" />
+          <EntitySet Name="Produkties" EntityType="Self.Produkty" />
+          <EntitySet Name="TypyProduktows" EntityType="Self.TypyProduktow" />
+          <AssociationSet Name="FK_Koszyk_Produkty" Association="Self.FK_Koszyk_Produkty">
+            <End Role="Produkty" EntitySet="Produkties" />
+            <End Role="Koszyk" EntitySet="Koszyks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produkty_TypyProduktow" Association="Self.FK_Produkty_TypyProduktow">
+            <End EntitySet="TypyProduktows" Role="TypyProduktow" />
+            <End EntitySet="Produkties" Role="Produkty" />
+          </AssociationSet>
+          <EntitySet Name="InformacjeOKlientaches" EntityType="KosmetykiDBModel.InformacjeOKlientach" />
+          <EntitySet Name="Opinies" EntityType="KosmetykiDBModel.Opinie" />
+          <EntitySet Name="Wysylkas" EntityType="KosmetykiDBModel.Wysylka" />
+          <AssociationSet Name="FK_Wysylka_Produkty" Association="KosmetykiDBModel.FK_Wysylka_Produkty">
+            <End Role="Produkty" EntitySet="Produkties" />
+            <End Role="Wysylka" EntitySet="Wysylkas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="InformacjeOKlientach">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Opinie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Opinia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Wysylka">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdProdukt" Type="Int32" />
+          <Property Name="Wiadomosc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JakPlaci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JakWyslac" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Produkty" Relationship="KosmetykiDBModel.FK_Wysylka_Produkty" FromRole="Wysylka" ToRole="Produkty" />
+        </EntityType>
+        <Association Name="FK_Wysylka_Produkty">
+          <End Type="KosmetykiDBModel.Produkty" Role="Produkty" Multiplicity="0..1" />
+          <End Type="KosmetykiDBModel.Wysylka" Role="Wysylka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wysylka">
+              <PropertyRef Name="IdProdukt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KosmetykiDBModelStoreContainer" CdmEntityContainer="KosmetykiDBEntities">
+          <EntitySetMapping Name="Koszyks">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.Koszyk">
+              <MappingFragment StoreEntitySet="Koszyk">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="ProduktID" ColumnName="ProduktID" />
+                <ScalarProperty Name="Ilosc" ColumnName="Ilosc" />
+                <ScalarProperty Name="DataZakupu" ColumnName="DataZakupu" />
+                <ScalarProperty Name="JestwKoszyku" ColumnName="JestwKoszyku" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produkties">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.Produkty">
+              <MappingFragment StoreEntitySet="Produkty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Cena" ColumnName="Cena" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Zdjecie" ColumnName="Zdjecie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypyProduktows">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.TypyProduktow">
+              <MappingFragment StoreEntitySet="TypyProduktow">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformacjeOKlientaches">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.InformacjeOKlientach">
+              <MappingFragment StoreEntitySet="InformacjeOKlientach">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opinies">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.Opinie">
+              <MappingFragment StoreEntitySet="Opinie">
+                <ScalarProperty Name="Opinia" ColumnName="Opinia" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wysylkas">
+            <EntityTypeMapping TypeName="KosmetykiDBModel.Wysylka">
+              <MappingFragment StoreEntitySet="Wysylka">
+                <ScalarProperty Name="JakWyslac" ColumnName="JakWyslac" />
+                <ScalarProperty Name="JakPlaci" ColumnName="JakPlaci" />
+                <ScalarProperty Name="Wiadomosc" ColumnName="Wiadomosc" />
+                <ScalarProperty Name="IdProdukt" ColumnName="IdProdukt" />
+                <ScalarProperty Name="KlientId" ColumnName="KlientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

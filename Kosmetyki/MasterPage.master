@@ -1,0 +1,68 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>****PUDEREK****</title>
+    <link rel="stylesheet" href="Styles/StyleSheet.css"  type="text/css"/>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div id="wrapper">
+                <div id="banner">
+                
+                    <asp:Image ID="Image1" runat="server"  ImageUrl="~/Images/kosmetyki_1.jpg" Width="1151px"  />
+                </div>
+                <div id="navigation">
+                    <ul id="nav">
+                        <li><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Index.aspx">Start</asp:HyperLink>
+                        </li>
+                          <li><a href="#">Kosmetyki</a>
+                              <ul class="sub1" >
+                                  <li><asp:Hyperlink ID="HyperLink6" runat="server" NavigateUrl="~/Pages/CienieDopowiekaspx.aspx">Cienie do powiek</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink5" runat="server" NavigateUrl="~/Pages/Korektory.aspx">Korektory</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink7" runat="server" NavigateUrl="~/Pages/Blyszczyki.aspx">Błyszczyki</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink8" runat="server" NavigateUrl="~/Pages/Tuszedorzes.aspx">Tusze do rzęs</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink9" runat="server" NavigateUrl="~/Pages/szminki.aspx">Szminki</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink10" runat="server" NavigateUrl="~/Pages/pudry.aspx">Pudry</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink11" runat="server" NavigateUrl="~/Pages/eyelinery.aspx">Eyelinery</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink12" runat="server" NavigateUrl="~/Pages/Rozedopoliczkow.aspx">Róże do policzków</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink13" runat="server" NavigateUrl="~/Pages/Cieniedobrwi.aspx">Cienie do brwi</asp:Hyperlink></li>
+                                  <li><asp:Hyperlink ID="HyperLink14" runat="server" NavigateUrl="~/Pages/kredkidoust.aspx">Kredki do ust</asp:Hyperlink></li>
+                                   <li><asp:Hyperlink ID="HyperLink15" runat="server" NavigateUrl="~/Pages/Podklady.aspx">Podkłady</asp:Hyperlink></li>
+                              </ul>
+                          </li>
+                        <li><asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Pages/About.aspx">O firmie</asp:HyperLink></li>
+                     <li><asp:HyperLink ID="HyperLink16" runat="server" NavigateUrl="~/Pages/Wyszukiwarka.aspx">Wyszukaj</asp:HyperLink></li>
+                        <li><asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Pages/Kontakt.aspx">Kontakt</asp:HyperLink></li>
+                        <li><asp:HyperLink ID="HyperLink17" runat="server" NavigateUrl="~/Pages/Opinie.aspx">Opinie</asp:HyperLink></li>
+                        <li><asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Pages/Management/Management.aspx">Management</asp:HyperLink></li>
+                         <li style="float:right"> 
+                            <asp:HyperLink ID="lnkRegister" runat="server" NavigateUrl="~/Pages/Account/Register.aspx" BorderStyle="None" ForeColor="#660066">Rejestracja</asp:HyperLink>
+                            <asp:HyperLink ID="litStatus" runat="server" NavigateUrl="~/Pages/ShoppingCart.aspx" ForeColor="#660066">[litStatus]</asp:HyperLink>
+                        </li>
+                          <li style="float:right"> 
+                            <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Pages/Account/Login.aspx" BorderStyle="None" ForeColor="#660066">Zaloguj</asp:HyperLink>
+                              <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click" ForeColor="#660066">Wyloguj</asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+                <div id="content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                       
+                    </asp:ContentPlaceHolder>
+              
+                    <br />
+                    <br />
+              
+                </div>
+                    </div>
+              
+            </div>
+    </form>
+</body>
+</html>
